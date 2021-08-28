@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Consulta CEP</title>
+</head>
+<body>
+
+<h1> Consultar CEP </h1>
+
+<p>Informe o CEP que deseja consultar:</p>
+<input type="text" id ="txtcep">
+
+<button onclick="buscarcep()">Buscar</button>
+
+<h1>Informações</h1>
+<div id="divresult"></div>
+
+</body>
+<script>
+	function buscarcep()
+	{
+		var cep = document.getElementById('txtcep').value; //lê  o cep
+		var urlServicoCep = "http://viacep.com.br/ws/" + cep + "/json"; 
+		var respostaParceiro = httpGet(urlServicoCep); //resposta consulta
+		var resultado = JSON.parse(respostaParceiro); //conversao
+		document.getElementById('divresult').innerHTML= resultado.logradouro + " | " + resultado.bairro + " | " + resultado.localidade + " | " + resultado.uf;
+		
+		
+	}
+
+	function httpGet(urlServicoCep)
+	{
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", urlServicoCep, false);
+		xmlHttp.send(null);
+		return xmlHttp.responseText;
+	}
+
+</script>
+</html>
